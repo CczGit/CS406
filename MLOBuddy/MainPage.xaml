@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MLOBuddy.MainPage">
+
+
+    <Grid
+        RowDefinitions = "100,40,40,40,40,*"
+        ColumnDefinitions = ".75*, .25*"
+        Padding ="10"
+        RowSpacing="5">
+        
+        <Image Grid.ColumnSpan="2"
+               Source="hmblogo.jpg"
+               BackgroundColor="White"/>
+        
+        <Button Text="Add New Client"
+                Grid.Row="1"
+                Grid.ColumnSpan="2"/>    
+        
+        <Entry Placeholder="Enter Client ID Here"
+               Grid.Row="2"
+               x:Name="id"
+               Text="{Binding SearchId}"
+               />
+        
+        <Button Text="Search"
+                Grid.Row="2"
+                Grid.Column="2"
+                x:Name="Search"
+                Command="{Binding SearchCommand}"
+                />
+    
+        <Entry Placeholder="Select Originator"
+                Grid.Row="3"
+                FontSize="15"
+                />
+        
+        <Button Text="Load"
+                Grid.Row="3"
+                Grid.Column="2"/>
+    
+        <Button Text="Show Favorites"
+                Grid.Row="4"
+                Grid.ColumnSpan="2"/>
+        
+        <CollectionView>
+            
+        </CollectionView>
+
+    </Grid>
+    
+</ContentPage>
