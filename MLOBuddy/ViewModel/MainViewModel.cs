@@ -12,7 +12,7 @@ namespace MLOBuddy.ViewModel
 {
     public partial class MainViewModel : ObservableObject
     {
-        public MainViewModel() 
+        public MainViewModel()
         {
             PreQuals = new ObservableCollection<PreQual>();
             Originators = new ObservableCollection<string> { "Edward", "Rafael" };
@@ -38,6 +38,64 @@ namespace MLOBuddy.ViewModel
             var result = await RestServices.GetPreQual(SearchId);
             PreQuals.Add(result);
             SearchId = string.Empty;
+        }
+
+        [RelayCommand]
+        public async void LoadOriginator()
+        {
+            PreQuals.Clear(); // Clear out the prequalifications that might have been loaded already
+            PreQual[] res;
+            switch (SelectedOriginator) 
+            { 
+                case "Rafael":
+                    res = await RestServices.GetOriginator("661");
+                    break;
+                case "Edward":
+                    res = await RestServices.GetOriginator("660");  
+                    break;
+                default: // Do nothing if an originator is not selected.
+                    return;
+            }
+
+            foreach (PreQual client in res) 
+            { 
+                if (client.hidden)
+                {
+                    continue;
+                }
+                PreQuals.Add(client);
+            }
+        }
+        [RelayCommand]
+        public void ShowFavorites()
+        {
+            ObservableCollection<PreQual> all_clients = new(PreQuals);
+            PreQuals.Clear();
+            foreach (PreQual client in all_clients)
+            {
+                if(!client.favorite)
+                {
+                    continue;
+                }
+                PreQuals.Add(client);
+            }
+        }
+        [RelayCommand]
+        public void SetFavorite(PreQual client)
+        {
+            client.favorite = !client.favorite;  //TODO: Add send api to update data in server
+        }
+        [RelayCommand]
+        public void SetHidden(PreQual client)
+        {
+            client.hidden = !client.hidden;
+            if (PreQuals.Contains(client)) { PreQuals.Remove(client); }
+        }
+        [RelayCommand]
+        async Task ViewDetails(PreQual Client)
+        {
+            Dictionary<string, object> NavigationParameters = new Dictionary<string, object> { { "Client", Client }, };
+            await Shell.Current.GoToAsync($"{nameof(DetailsPage)}", NavigationParameters);
         }
     }
 }
