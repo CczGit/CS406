@@ -25,9 +25,12 @@ namespace MLOBuddy.ViewModel
             {
                 SetProperty(ref currClient, value);
                 FavoriteString = CurrClient.favoriteString;  // Using this setter allows the favorite string to be set properly at construction.
-
+                ClientList = new ObservableCollection<Client>(CurrClient.clients);
             } 
         }
+
+        [ObservableProperty]
+        ObservableCollection<Client> _clientList;
 
         [ObservableProperty]
         private string favoriteString;
@@ -58,6 +61,19 @@ namespace MLOBuddy.ViewModel
         { 
             CurrClient.favorite = !CurrClient.favorite;
             FavoriteString = CurrClient.FavoriteString();
+        }
+        [RelayCommand]
+        public void DeleteClient(Client client)
+        {
+            int numIndex = Array.IndexOf(CurrClient.clients, client);
+            CurrClient.clients = CurrClient.clients.Where((val, idx) => idx != numIndex).ToArray();
+            if(ClientList.Contains(client)) { ClientList.Remove(client); }
+        }
+        [RelayCommand]
+        async Task EditClient(Client client)
+        {
+            Dictionary<string, object> NavigationParameters = new Dictionary<string, object> { { "Client", client }, };
+            await Shell.Current.GoToAsync($"{nameof(AddOrEditClient)}", NavigationParameters);
         }
     }
 }

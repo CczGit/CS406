@@ -30,8 +30,8 @@
             Text="Email Client"
             Grid.Row="1"
             Grid.Column="1"/>
-        <Button
-            Text="Edit Client"
+        <Button 
+            Text="Add Client"
             Grid.Row="2"
             Grid.ColumnSpan="2"/>
         <Frame
@@ -44,17 +44,46 @@
         <CollectionView
             Grid.Row="4"
             Grid.ColumnSpan="2"
-            ItemsSource="{Binding CurrClient.clients}">
+            ItemsSource="{Binding ClientList}">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <Grid
-                        Padding="1">
-                        <Frame>
-                            <Label Text="{Binding .}"
-                                   FontSize="15"/>
-                        </Frame>
-                        
-                    </Grid>
+                    <SwipeView>
+                        <SwipeView.RightItems>
+                            <SwipeItems>
+                                <SwipeItem
+                                    Text="Delete"
+                                    BackgroundColor="Red"
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:DetailsPageViewModel}},Path=DeleteClientCommand}"
+                                    CommandParameter="{Binding .}"/>
+                            </SwipeItems>
+                        </SwipeView.RightItems>
+                        <Grid
+                            Padding="1">
+                            <Frame>
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer
+                                         Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:DetailsPageViewModel}},Path=EditClientCommand}"
+                                        CommandParameter="{Binding .}"/>
+                                </Frame.GestureRecognizers>
+                                <Grid
+                                    HeightRequest="90"
+                                    ColumnDefinitions=".90*,.10*"
+                                    >
+                                    <Label
+                                        Text="{Binding .}"
+                                        FontSize="15"
+                                        VerticalOptions="StartAndExpand"
+                                        Grid.Column="0"
+                                    />
+                                    <Image 
+                                        Source="chevron_right.svg"
+                                        Grid.Column="1"
+                                        Opacity=".1"
+                                           />
+                                </Grid>
+                            </Frame>
+                        </Grid>
+                    </SwipeView>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>

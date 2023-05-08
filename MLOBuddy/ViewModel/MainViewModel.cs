@@ -83,13 +83,15 @@ namespace MLOBuddy.ViewModel
         [RelayCommand]
         public void SetFavorite(PreQual client)
         {
-            client.favorite = !client.favorite;  //TODO: Add send api to update data in server
+            client.favorite = !client.favorite; 
+            RestServices.PostCase(client, false);
         }
         [RelayCommand]
         public void SetHidden(PreQual client)
         {
             client.hidden = !client.hidden;
             if (PreQuals.Contains(client)) { PreQuals.Remove(client); }
+            RestServices.PostCase(client, false);
         }
         [RelayCommand]
         async Task ViewDetails(PreQual Client)
