@@ -1,4 +1,6 @@
 ﻿
+using static Android.Icu.Text.CaseMap;
+
 public class PreQual
 {
     public string _id { get; set; }
@@ -59,7 +61,7 @@ public class Client
     public string phoneNumber { get; set; }
     public string email { get; set; }
     public float id { get; set; }
-    public object[] debts { get; set; }
+    public Debt[] debts { get; set; }
     public Job[] jobs { get; set; }
     public float income { get; set; }
     public float debt { get; set; }
@@ -89,16 +91,23 @@ public class Job
     public float? returnAverage { get; set; }
     public string pensionType { get; set; }
     public string _id { get; set; }
+    public override string ToString()
+    {
+        return $"{title}\nIncome: {salary}\nType:{type}\nYOE:{yearsOfExperience}";
+    }
 }
 
 public class Debt
 {
-    public double payment { get; set; }
-    public string type { get; set; }
-    public double balance { get; set; }
-    public string id { get; set; }
-    public string deferred { get; set; }
+    public double? payment { get; set; }
+    public string? type { get; set; }
+    public double? balance { get; set; }
+    public double? id { get; set; }
+    public string? deferred { get; set; }
     public bool isDeferred { get; set; }
     public string _id { get; set; }
-
+    public override string ToString()
+    {
+        return $"{type}\nPayment: {payment}";
+    }
 }

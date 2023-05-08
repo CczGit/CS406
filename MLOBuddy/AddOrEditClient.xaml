@@ -2,11 +2,140 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MLOBuddy.AddOrEditClient"
-             Title="AddOrEditClient">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+             Title="Add or Edit Client Page"
+             xmlns:viewmodel="clr-namespace:MLOBuddy.ViewModel"
+             x:DataType="viewmodel:AddOrEditClientViewModel">
+
+    <!-- Grid with 8 rows and 2 columns -->
+    <Grid
+        RowDefinitions="40,40,40,30,40,200*,30,40,200*,20,*" 
+        ColumnDefinitions=".50*,.50*"
+        Padding="10"
+        RowSpacing="5"
+        ColumnSpacing="5">
+       
+
+        <Button Text="Call Client"
+                Grid.Row="0"
+                Command="{Binding CallClientCommand}"/>
+
+        <Button Text="Email Client"
+                Grid.Row="0"
+                Grid.Column="1"/>
+        
+        <Entry  Placeholder="First Name"
+                Grid.Row="1"
+                x:Name="FirstName"
+                Text="{Binding CurrClient.firstName}"/>
+
+        <Entry  Placeholder="Last Name"
+                Grid.Row="1"
+                Grid.Column="2"
+                Text="{Binding CurrClient.lastName}"/>
+
+        <Entry  Placeholder="Email"
+                Grid.Row="2"
+                Grid.Column="0"
+                Text="{Binding CurrClient.email}"/>
+
+        <Entry  Placeholder="Phone Number"
+                Grid.Row="2"
+                Grid.Column="1"
+                Text="{Binding CurrClient.phoneNumber}"/>
+
+        <Label Grid.Row="3"
+               Grid.ColumnSpan="2"
+               BackgroundColor="#090A63"
+               TextColor="White"
+               VerticalTextAlignment="Center"
+               HorizontalTextAlignment="Center"
+               HeightRequest="30"
+               Text="Job Info"/>
+
+        <Button Text="Add Job"
+                Grid.ColumnSpan="2"
+                WidthRequest="300"
+                Grid.Row="4"/>
+
+        <CollectionView Grid.Row="5"
+                        Grid.ColumnSpan="2"
+                        ItemsSource="{Binding CurrClient.jobs}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Grid Padding="1">
+                        <Frame>
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer>
+                                    <!-- Add tap to edit jobs here-->
+                                </TapGestureRecognizer>
+                            </Frame.GestureRecognizers>
+                            <Grid
+                                HeightRequest="90"
+                                ColumnDefinitions=".90*,.10*"
+                                >
+                                <Label
+                                    Text="{Binding .}"
+                                    FontSize="15"
+                                    VerticalOptions="StartAndExpand"
+                                    Grid.Column="0"
+                                />
+                                <Image 
+                                    Source="chevron_right.svg"
+                                    Grid.Column="1"
+                                    Opacity=".1"
+                                        />
+                            </Grid>
+                        </Frame>
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+        <Label Grid.Row="6"
+               Grid.ColumnSpan="2"
+               BackgroundColor="#090A63"
+               TextColor="White"
+               VerticalTextAlignment="Center"
+               HorizontalTextAlignment="Center"
+               HeightRequest="30"
+               Text="Debt Info"/>
+        <Button Text="Add Debt"
+                Grid.ColumnSpan="2"
+                WidthRequest="300"
+                Grid.Row="7"/>
+        <CollectionView Grid.Row="8"
+                        Grid.ColumnSpan="2"
+                        ItemsSource="{Binding CurrClient.debts}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Grid Padding="1">
+                        <Frame>
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer>
+                                    <!-- Add tap to edit debts here-->
+                                </TapGestureRecognizer>
+                            </Frame.GestureRecognizers>
+                            <Grid
+                                HeightRequest="40"
+                                ColumnDefinitions=".90*,.10*"
+                                >
+                                <Label
+                                        Text="{Binding .}"
+                                        FontSize="15"
+                                        VerticalOptions="StartAndExpand"
+                                        Grid.Column="0"
+                                    />
+                                <Image 
+                                        Source="chevron_right.svg"
+                                        Grid.Column="1"
+                                        Opacity=".1"
+                                            />
+                            </Grid>
+                        </Frame>
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+
+    </Grid>
 </ContentPage>
