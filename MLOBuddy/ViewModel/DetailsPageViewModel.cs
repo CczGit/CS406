@@ -25,7 +25,7 @@ namespace MLOBuddy.ViewModel
             {
                 SetProperty(ref currClient, value);
                 FavoriteString = CurrClient.favoriteString;  // Using this setter allows the favorite string to be set properly at construction.
-                ClientList = new ObservableCollection<Client>(CurrClient.clients);
+                ClientList = new ObservableCollection<Client>(CurrClient.Clients);
             } 
         }
 
@@ -53,7 +53,7 @@ namespace MLOBuddy.ViewModel
         {
             if (PhoneDialer.Default.IsSupported)
             {
-                PhoneDialer.Default.Open(CurrClient.clients[0].phoneNumber);
+                PhoneDialer.Default.Open(CurrClient.Clients[0].phoneNumber);
             }
         }
         [RelayCommand]
@@ -65,8 +65,7 @@ namespace MLOBuddy.ViewModel
         [RelayCommand]
         public void DeleteClient(Client client)
         {
-            int numIndex = Array.IndexOf(CurrClient.clients, client);
-            CurrClient.clients = CurrClient.clients.Where((val, idx) => idx != numIndex).ToArray();
+            CurrClient.Clients.Remove(client);
             if(ClientList.Contains(client)) { ClientList.Remove(client); }
         }
         [RelayCommand]

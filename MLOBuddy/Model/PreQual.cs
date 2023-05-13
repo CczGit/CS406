@@ -1,10 +1,15 @@
-﻿
-public class PreQual
+﻿using System.Collections.ObjectModel;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+
+public partial class PreQual : ObservableObject
 {
     public string _id { get; set; }
     public bool favorite { get; set; }
     public bool hidden { get; set; }
-    public Client[] clients { get; set; }
+
+    [ObservableProperty]
+    public ObservableCollection<Client> clients;
     public DateTime date { get; set; }
     public bool VA { get; set; }
     public bool privacy { get; set; }
@@ -52,17 +57,21 @@ public class PreQual
     }
 }
 
-public class Client
+public partial class Client : ObservableObject
 {
     public string firstName { get; set; }
     public string lastName { get; set; }
     public string phoneNumber { get; set; }
     public string email { get; set; }
     public float id { get; set; }
-    public Debt[] debts { get; set; }
-    public Job[] jobs { get; set; }
+
+    [ObservableProperty]
+    public ObservableCollection<Debt> debts;
+    [ObservableProperty]
+    public ObservableCollection<Job> jobs;
+
     public float income { get; set; }
-    public decimal? debt { get; set; }
+    public decimal debt { get; set; }
     public float creditScore { get; set; }
     public string maritalStatus { get; set; }
     public object preNup { get; set; }
@@ -72,7 +81,7 @@ public class Client
     public string _id { get; set; }
     public override string ToString()
     {
-        return $"Client: {firstName} {lastName} \nEmail: {email}\nPhone Number: {phoneNumber}\n Income: {Math.Round(income,2)} Debts:{Math.Round((decimal)debt,2)}";
+        return $"Client: {firstName} {lastName} \nEmail: {email}\nPhone Number: {phoneNumber}\n Income: {Math.Round(income,2)} Debts:{Math.Round(debt,2)}";
     }
 }
 
@@ -97,11 +106,11 @@ public class Job
 
 public class Debt
 {
-    public decimal? payment { get; set; }
-    public string? type { get; set; }
-    public decimal? balance { get; set; }
-    public float? id { get; set; }
-    public string? deferred { get; set; }
+    public decimal payment { get; set; }
+    public string type { get; set; }
+    public decimal balance { get; set; }
+    public decimal id { get; set; }
+    public string deferred { get; set; }
     public bool isDeferred { get; set; }
     public string _id { get; set; }
     public override string ToString()

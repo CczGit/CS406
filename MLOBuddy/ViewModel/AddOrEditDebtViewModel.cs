@@ -13,34 +13,46 @@ using System.Threading.Tasks;
 namespace MLOBuddy.ViewModel
 {
     [QueryProperty(nameof(CurrClient), "CurrClient")]
-    [QueryProperty(nameof(index), "index")]
+    [QueryProperty(nameof(StartPayment), "StartPayment")]
+    [QueryProperty(nameof(CurrDebt), "CurrDebt")]
     public partial class AddOrEditDebtViewModel : ObservableObject
     {
         public AddOrEditDebtViewModel()
         {
             DebtTypes = new ObservableCollection<string> { "Credit Card", "Auto Loan", "Personal Loan", "Student Loan", "Alimony", "Mortgage" };
-            StartPayment = CurrClient.debts[index].payment;
-            CurrDebt = CurrClient.debts[index];
+            
         }
 
         [ObservableProperty]
         private Debt currDebt;
-
+     
         [ObservableProperty]
         private Client currClient;
 
         [ObservableProperty]
         private ObservableCollection<string> debtTypes;
 
-        private int index;
-        private decimal? StartPayment;
+        [ObservableProperty]
+        private decimal startPayment;
 
         [RelayCommand]
         public void SaveChanges() 
         {
-            CurrClient.debts[index].payment = CurrDebt.payment;
-            CurrClient.debt -= StartPayment;
-            CurrClient.debt += CurrClient.debts[index].payment;
+            if (CurrDebt.id != 0)
+            {
+                
+                int index = CurrClient.Debts.IndexOf(CurrDebt);
+                CurrClient.Debts[index].payment = CurrDebt.payment;
+                if(StartPayment!= 0) { CurrClient.debt -= StartPayment; }
+                CurrClient.debt += CurrClient.Debts[index].payment;
+            }
+            else
+            {
+                Random rnd = new();
+                CurrClient.debt += CurrDebt.payment;
+                CurrDebt.id = rnd.Next();
+                CurrClient.Debts.Add(CurrDebt);
+            }
 
         }
     }

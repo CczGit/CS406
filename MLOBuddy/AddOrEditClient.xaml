@@ -50,7 +50,7 @@
 
         <CollectionView Grid.Row="4"
                         Grid.ColumnSpan="2"
-                        ItemsSource="{Binding CurrClient.jobs}">
+                        ItemsSource="{Binding CurrClient.Jobs}">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <Grid Padding="1">
@@ -93,7 +93,7 @@
         
         <CollectionView Grid.Row="6"
                         Grid.ColumnSpan="2"
-                        ItemsSource="{Binding CurrClient.debts}">
+                        ItemsSource="{Binding CurrClient.Debts}">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <Grid Padding="1">

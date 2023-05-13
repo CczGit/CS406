@@ -35,10 +35,13 @@ namespace MLOBuddy.ViewModel
             if (CurrDebt == null)
             {
                 CurrDebt = new();
-                CurrClient.debts.Append(CurrDebt);
             }
-            int index = Array.IndexOf(CurrClient.debts, CurrDebt);
-            Dictionary<string, object> NavigationParameters = new Dictionary<string, object> { { "CurrClient", CurrClient }, { "Index", index } };
+            Dictionary<string, object> NavigationParameters = new Dictionary<string, object> 
+            { 
+                { "CurrClient", CurrClient }, 
+                { "StartPayment", CurrDebt.payment } ,
+                { "CurrDebt", CurrDebt },
+            };
             await Shell.Current.GoToAsync($"{nameof(AddOrEditDebt)}", NavigationParameters);
         }
         [RelayCommand]
@@ -47,7 +50,6 @@ namespace MLOBuddy.ViewModel
             if (CurrJob == null)
             {
                 CurrJob = new();
-                CurrClient.jobs.Append(CurrJob);
             }
             Dictionary<string, object> NavigationParameters = new Dictionary<string, object> { { "CurrJob", CurrJob }, { "CurrTotalDebt", CurrClient.debt } };
             await Shell.Current.GoToAsync($"{nameof(AddOrEditJob)}", NavigationParameters);
