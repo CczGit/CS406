@@ -13,7 +13,7 @@
         RowSpacing="5">
         
         <Image Grid.ColumnSpan="2"
-               Source="hmblogo.jpg"
+               Source="dotnet_bot.svg"
                BackgroundColor="White"/>
         
         <Button Text="Add New Case"

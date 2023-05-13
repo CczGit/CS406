@@ -1,6 +1,4 @@
 ﻿
-using static Android.Icu.Text.CaseMap;
-
 public class PreQual
 {
     public string _id { get; set; }
@@ -64,7 +62,7 @@ public class Client
     public Debt[] debts { get; set; }
     public Job[] jobs { get; set; }
     public float income { get; set; }
-    public float debt { get; set; }
+    public decimal? debt { get; set; }
     public float creditScore { get; set; }
     public string maritalStatus { get; set; }
     public object preNup { get; set; }
@@ -74,7 +72,7 @@ public class Client
     public string _id { get; set; }
     public override string ToString()
     {
-        return $"Client: {firstName} {lastName} \nEmail: {email}\nPhone Number: {phoneNumber}\n Income: {Math.Round(income,2)} Debts:{Math.Round(debt,2)}";
+        return $"Client: {firstName} {lastName} \nEmail: {email}\nPhone Number: {phoneNumber}\n Income: {Math.Round(income,2)} Debts:{Math.Round((decimal)debt,2)}";
     }
 }
 
@@ -99,10 +97,10 @@ public class Job
 
 public class Debt
 {
-    public double? payment { get; set; }
+    public decimal? payment { get; set; }
     public string? type { get; set; }
-    public double? balance { get; set; }
-    public double? id { get; set; }
+    public decimal? balance { get; set; }
+    public float? id { get; set; }
     public string? deferred { get; set; }
     public bool isDeferred { get; set; }
     public string _id { get; set; }

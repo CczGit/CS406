@@ -24,6 +24,12 @@ public static class MauiProgram
 		builder.Services.AddTransient<AddOrEditClient>();
         builder.Services.AddTransient<AddOrEditClientViewModel>();
 
+		builder.Services.AddTransient<AddOrEditDebt>();
+        builder.Services.AddTransient<AddOrEditDebtViewModel>();
+
+		builder.Services.AddTransient<AddOrEditJob>();
+		builder.Services.AddTransient<AddOrEditJobVIewModel>();
+
 #if DEBUG
         builder.Logging.AddDebug();
 #endif
