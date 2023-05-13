@@ -46,7 +46,9 @@
         <Button Text="Add Job"
                 Grid.ColumnSpan="2"
                 WidthRequest="300"
-                Grid.Row="3"/>
+                Grid.Row="3"
+                Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:AddOrEditClientViewModel}},Path=GoToAddOrEditJobCommand}"
+                CommandParameter="{x:Null}"/>
 
         <CollectionView Grid.Row="4"
                         Grid.ColumnSpan="2"

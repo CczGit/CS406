@@ -5,10 +5,58 @@
              Title="Add Or Edit Job"
              xmlns:viewmodel="clr-namespace:MLOBuddy.ViewModel"
              x:DataType="viewmodel:AddOrEditJobVIewModel">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+    <Grid
+        RowDefinitions="Auto,Auto,Auto,Auto,Auto"
+        ColumnDefinitions="25*,75*"
+        Padding="10"
+        RowSpacing="5"
+        ColumnSpacing="5">
+
+        <Label Text="Type: "
+               FontSize="15"
+               VerticalTextAlignment="Center"
+               HorizontalTextAlignment="Start"
+               Grid.Column="0"/>
+        <Picker Title="{Binding CurrJob.type}"
+                FontSize="15"
+                Grid.Column="1"
+                Grid.ColumnSpan="1"
+                ItemsSource="{Binding JobTypes}"
+                SelectedItem="{Binding CurrJob.type}"
+                />
+        <Label Text="Monthly Income: "
+               FontSize="15"
+               VerticalTextAlignment="Center"
+               HorizontalTextAlignment="Start"
+               Grid.Column="0"
+               Grid.Row="1"/>
+        <Entry Placeholder="Enter Income"
+               Grid.Row="1"
+               Grid.Column="1"
+               Text="{Binding CurrJob.salary}"/>
+        <Label Text="YOE: "
+               FontSize="15"
+               VerticalTextAlignment="Center"
+               HorizontalTextAlignment="Start"
+               Grid.Column="0"
+               Grid.Row="2"/>
+        <Entry Placeholder="Enter YOE"
+               Grid.Row="2"
+               Grid.Column="3"
+               Text="{Binding CurrJob.yearsOfExperience}"/>
+        <Label Text="Employer/Title: "
+               FontSize="15"
+               VerticalTextAlignment="Center"
+               HorizontalTextAlignment="Start"
+               Grid.Column="0"
+               Grid.Row="3"/>
+        <Entry Placeholder="Enter Title/Employer"
+               Grid.Row="3"
+               Grid.Column="1"
+               Text="{Binding CurrJob.title}"/>
+        <Button Grid.Row="4"
+                Grid.ColumnSpan="2"
+                Text="Save Changes"
+                Command="{Binding SaveChangesCommand}"/>
+    </Grid>
 </ContentPage>

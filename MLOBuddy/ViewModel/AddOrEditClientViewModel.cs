@@ -51,7 +51,11 @@ namespace MLOBuddy.ViewModel
             {
                 CurrJob = new();
             }
-            Dictionary<string, object> NavigationParameters = new Dictionary<string, object> { { "CurrJob", CurrJob }, { "CurrTotalDebt", CurrClient.debt } };
+            Dictionary<string, object> NavigationParameters = new Dictionary<string, object> {
+                { "CurrJob", CurrJob }, 
+                { "StartIncome", CurrClient.income } , 
+                { "CurrClient" , CurrClient } 
+            };
             await Shell.Current.GoToAsync($"{nameof(AddOrEditJob)}", NavigationParameters);
         }
     }
