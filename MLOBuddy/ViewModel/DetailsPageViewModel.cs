@@ -11,26 +11,33 @@ using MLOBuddy.Services;
 
 namespace MLOBuddy.ViewModel
 {
-    [QueryProperty(nameof(CurrClient),"Client")]
+    [QueryProperty(nameof(CurrCase),"Client")]
+    [QueryProperty(nameof(PreQuals), "PreQuals")]
     public partial class DetailsPageViewModel : ObservableObject
     {
         public DetailsPageViewModel() 
         {
         }
 
-        private PreQual currClient;  // Named this way to avoid clashing with Client class
-        public PreQual CurrClient {  // Client data will not change in this page after being assigned by QueryProperty, so it doesn't require to be Observable
-            get => currClient;
+        private PreQual currCase;  // Named this way to avoid clashing with Client class
+        public PreQual CurrCase
+        {  // Client data will not change in this page after being assigned by QueryProperty, so it doesn't require to be Observable
+            get => currCase;
             set 
             {
-                SetProperty(ref currClient, value);
-                FavoriteString = CurrClient.favoriteString;  // Using this setter allows the favorite string to be set properly at construction.
-                ClientList = new ObservableCollection<Client>(CurrClient.Clients);
+                SetProperty(ref currCase, value);
+                FavoriteString = CurrCase.favoriteString;  // Using this setter allows the favorite string to be set properly at construction.
+                ClientList = new ObservableCollection<Client>(CurrCase.Clients);
             } 
         }
 
+        RestServices RestServices = new();
+
         [ObservableProperty]
         ObservableCollection<Client> _clientList;
+
+        [ObservableProperty]
+        ObservableCollection<PreQual> preQuals;
 
         [ObservableProperty]
         private string favoriteString;
@@ -40,7 +47,7 @@ namespace MLOBuddy.ViewModel
         {
             try 
             { 
-                await Browser.Default.OpenAsync("https://api.primerhogarpr.com:8443/download/" + CurrClient.id, BrowserLaunchMode.SystemPreferred); 
+                await Browser.Default.OpenAsync("https://api.primerhogarpr.com:8443/download/" + CurrCase.id, BrowserLaunchMode.SystemPreferred); 
             }
             catch (Exception ex)
             {
@@ -53,19 +60,19 @@ namespace MLOBuddy.ViewModel
         {
             if (PhoneDialer.Default.IsSupported)
             {
-                PhoneDialer.Default.Open(CurrClient.Clients[0].phoneNumber);
+                PhoneDialer.Default.Open(CurrCase.Clients[0].phoneNumber);
             }
         }
         [RelayCommand]
         public void SetFavorite()
         { 
-            CurrClient.favorite = !CurrClient.favorite;
-            FavoriteString = CurrClient.FavoriteString();
+            CurrCase.favorite = !CurrCase.favorite;
+            FavoriteString = CurrCase.FavoriteString();
         }
         [RelayCommand]
         public void DeleteClient(Client client)
         {
-            CurrClient.Clients.Remove(client);
+            CurrCase.Clients.Remove(client);
             if(ClientList.Contains(client)) { ClientList.Remove(client); }
         }
         [RelayCommand]
@@ -73,6 +80,14 @@ namespace MLOBuddy.ViewModel
         {
             Dictionary<string, object> NavigationParameters = new Dictionary<string, object> { { "Client", client }, };
             await Shell.Current.GoToAsync($"{nameof(AddOrEditClient)}", NavigationParameters);
+        }
+        [RelayCommand]
+        async Task SaveChanges()
+        {
+            CurrCase = CurrCase.PreQualify();
+            RestServices.PostCase(CurrCase, false);
+            PreQuals.Clear();
+            await Shell.Current.GoToAsync($"..");
         }
     }
 }

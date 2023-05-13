@@ -7,7 +7,7 @@
              x:DataType="viewmodel:DetailsPageViewModel">
     <Grid
         ColumnDefinitions=".5*,.5*"
-        RowDefinitions="Auto,Auto,Auto,Auto,*"
+        RowDefinitions="Auto,Auto,Auto,Auto,*,Auto"
         Padding="10"
         RowSpacing="5"
         ColumnSpacing="5">
@@ -38,7 +38,7 @@
             Grid.Row="3"
             Grid.ColumnSpan="2">
             <Label
-                Text="{Binding CurrClient.preq_string}"
+                Text="{Binding CurrCase.preq_string}"
                 FontSize="15"/>
         </Frame>
         <CollectionView
@@ -87,6 +87,12 @@
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
+        <Button 
+            Text="Save Changes"
+            Grid.Row="5"
+            Grid.ColumnSpan="2"
+            Command="{Binding SaveChangesCommand}"/>
+        
 
     </Grid>
 </ContentPage>

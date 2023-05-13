@@ -96,7 +96,7 @@ namespace MLOBuddy.ViewModel
         [RelayCommand]
         async Task ViewDetails(PreQual Client)
         {
-            Dictionary<string, object> NavigationParameters = new Dictionary<string, object> { { "Client", Client }, };
+            Dictionary<string, object> NavigationParameters = new Dictionary<string, object> { { "Client", Client }, { "PreQuals", PreQuals } };
             await Shell.Current.GoToAsync($"{nameof(DetailsPage)}", NavigationParameters);
         }
     }

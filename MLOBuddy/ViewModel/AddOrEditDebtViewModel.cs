@@ -1,7 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Java.Security;
-using Javax.Security.Auth;
 using MLOBuddy.Services;
 using System;
 using System.Collections.Generic;
@@ -33,10 +31,10 @@ namespace MLOBuddy.ViewModel
         private ObservableCollection<string> debtTypes;
 
         [ObservableProperty]
-        private decimal startPayment;
+        private double startPayment;
 
         [RelayCommand]
-        public void SaveChanges() 
+        public async void SaveChanges() 
         {
             if (CurrDebt.id != 0)
             {
@@ -53,7 +51,7 @@ namespace MLOBuddy.ViewModel
                 CurrDebt.id = rnd.Next();
                 CurrClient.Debts.Add(CurrDebt);
             }
-
+            await Shell.Current.GoToAsync("..");
         }
     }
 

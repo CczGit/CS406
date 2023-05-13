@@ -7,7 +7,7 @@
 
 
     <Grid
-        RowDefinitions = "100,40,40,40,40,*"
+        RowDefinitions = "100,40,50,50,40,*"
         ColumnDefinitions = ".75*, .25*"
         Padding ="10"
         RowSpacing="5">
@@ -32,16 +32,26 @@
                 x:Name="Search"
                 Command="{Binding SearchCommand}"
                 />
-    
-        <Picker Title="Select Originator"
-                Grid.Row="3"
-                Grid.ColumnSpan="1"
-                FontSize="15"
-                SelectedItem="{Binding SelectedOriginator}"
-                ItemsSource="{Binding Originators}"
-                TextColor="Black"
-                VerticalTextAlignment="Center"
-                />
+        <Frame Grid.Row="3"
+               Grid.Column="0"
+               Grid.ColumnSpan="1"
+               BorderColor="White">
+            <Grid ColumnDefinitions=".5*,.5*"
+                  HeightRequest="50"
+                  Padding="5">
+                <Label Text="Select Originator"
+                       HorizontalTextAlignment="Start"
+                       VerticalTextAlignment="Center"/>
+                <Picker 
+                        Grid.Column="1"
+                        FontSize="15"
+                        SelectedItem="{Binding SelectedOriginator}"
+                        ItemsSource="{Binding Originators}"
+                        HorizontalTextAlignment="Center"
+                        />
+            </Grid>
+
+        </Frame>
         
         <Button Text="Load"
                 Grid.Row="3"
