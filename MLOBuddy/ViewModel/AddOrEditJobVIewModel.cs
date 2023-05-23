@@ -36,9 +36,13 @@ namespace MLOBuddy.ViewModel
         [RelayCommand]
         public async void SaveChanges()
         {
+            if (CurrClient.Jobs == null)
+            {
+                CurrClient.Jobs = new ObservableCollection<Job>();
+            }
             if (CurrJob.id != 0)
             {
-
+                
                 int index = CurrClient.Jobs.IndexOf(CurrJob);
                 CurrClient.Jobs[index].salary = CurrJob.salary;
                 if (StartIncome != 0) { CurrClient.income -= StartIncome; }

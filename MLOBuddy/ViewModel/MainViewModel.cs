@@ -94,8 +94,13 @@ namespace MLOBuddy.ViewModel
             RestServices.PostCase(client, false);
         }
         [RelayCommand]
-        async Task ViewDetails(PreQual Client)
+        async Task ViewDetails(PreQual? Client)
         {
+            if (Client == null)
+            {
+                Client = new();
+                
+            }
             Dictionary<string, object> NavigationParameters = new Dictionary<string, object> { { "Client", Client }, { "PreQuals", PreQuals } };
             await Shell.Current.GoToAsync($"{nameof(DetailsPage)}", NavigationParameters);
         }

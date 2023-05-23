@@ -18,7 +18,9 @@
         
         <Button Text="Add New Case"
                 Grid.Row="1"
-                Grid.ColumnSpan="2"/>    
+                Grid.ColumnSpan="2"
+                Command="{Binding ViewDetailsCommand}"
+                CommandParameter="{Null}"/>    
         
         <Entry Placeholder="Enter Case ID Here"
                Grid.Row="2"

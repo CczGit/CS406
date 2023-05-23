@@ -33,7 +33,9 @@
         <Button 
             Text="Add Client"
             Grid.Row="2"
-            Grid.ColumnSpan="2"/>
+            Grid.ColumnSpan="2"
+            Command="{Binding EditClientCommand}"
+            CommandParameter="{Null}"/>
         <Frame
             Grid.Row="3"
             Grid.ColumnSpan="2">
@@ -44,7 +46,7 @@
         <CollectionView
             Grid.Row="4"
             Grid.ColumnSpan="2"
-            ItemsSource="{Binding ClientList}">
+            ItemsSource="{Binding CurrCase.Clients}">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <SwipeView>

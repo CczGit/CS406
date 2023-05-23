@@ -36,6 +36,10 @@ namespace MLOBuddy.ViewModel
         [RelayCommand]
         public async void SaveChanges() 
         {
+            if (CurrClient.Debts == null)
+            {
+                CurrClient.Debts = new ObservableCollection<Debt>();
+            }
             if (CurrDebt.id != 0)
             {
                 

@@ -27,14 +27,11 @@ namespace MLOBuddy.ViewModel
             {
                 SetProperty(ref currCase, value);
                 FavoriteString = CurrCase.favoriteString;  // Using this setter allows the favorite string to be set properly at construction.
-                ClientList = new ObservableCollection<Client>(CurrCase.Clients);
+               
             } 
         }
 
         RestServices RestServices = new();
-
-        [ObservableProperty]
-        ObservableCollection<Client> _clientList;
 
         [ObservableProperty]
         ObservableCollection<PreQual> preQuals;
@@ -73,19 +70,34 @@ namespace MLOBuddy.ViewModel
         public void DeleteClient(Client client)
         {
             CurrCase.Clients.Remove(client);
-            if(ClientList.Contains(client)) { ClientList.Remove(client); }
         }
         [RelayCommand]
-        async Task EditClient(Client client)
+        async Task EditClient(Client? client)
         {
+            if (client == null)
+            {
+                client = new();
+                if (CurrCase.Clients == null)
+                {
+                    CurrCase.Clients = new ObservableCollection<Client>();
+                }
+                CurrCase.Clients.Add(client);
+            }
             Dictionary<string, object> NavigationParameters = new Dictionary<string, object> { { "Client", client }, };
             await Shell.Current.GoToAsync($"{nameof(AddOrEditClient)}", NavigationParameters);
         }
         [RelayCommand]
         async Task SaveChanges()
         {
+            bool NewCase = false;
+            if (CurrCase.id == null)
+            {
+                NewCase = true;
+                Random random = new();
+                CurrCase.id = random.Next().ToString();
+            }
             CurrCase = CurrCase.PreQualify();
-            RestServices.PostCase(CurrCase, false);
+            RestServices.PostCase(CurrCase, NewCase);
             PreQuals.Clear();
             await Shell.Current.GoToAsync($"..");
         }
